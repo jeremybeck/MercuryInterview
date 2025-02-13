@@ -93,5 +93,7 @@ class Transaction(BaseModel):
     transaction_notes: Optional[str] = Field(None, description="Additional notes about the transaction")
     transaction_receipt: Optional[HttpUrl] = Field(None, description="URL to the transaction receipt")
     transaction_category: MercuryCategory = Field(..., description="Category of the expense")
+    transaction_category_confidence: float = Field(..., description="Confidence of the category assignment")
     gl_code: GLCode = Field(..., description="General Ledger code associated with the transaction")
+    gl_code_confidence: float = Field(..., description="Confidence level of the general ledger code")
     policy_notes: Optional[str] = Field(None, description="Notes related to policy or approval status")
