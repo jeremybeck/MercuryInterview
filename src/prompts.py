@@ -4,7 +4,11 @@ from transaction_tags import *
 from language_models import *
 
 parsing_template = '''
-You are provided with a transaction in a business spend management product.  Assign an expense category describing the transaction, as well as a General Ledger (GL) code.  For each output, provide a confidence level (Low, Medium, High) that describes if you have no idea, if it is a reasonable guess, or you are certain of the answer. 
+You are provided with a transaction in a business spend management product.  Assign an expense category describing the transaction, as well as a General Ledger (GL) code.  
+
+Use all the information provided with the transaction, including the time of day, amount, and vendor, as well as any provided receipt or notes, to rationalize what the right category should be. 
+
+For each output, provide a confidence level (Low, Medium, High) that describes if you have no idea, if it is a reasonable guess, or you are certain of the answer. 
 
 ### Formatting Instructions
 {format_instructions}

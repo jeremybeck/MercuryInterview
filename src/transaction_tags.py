@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field
-from typing import Optional
+from pydantic import BaseModel, Field, HttpUrl
+from typing import Optional, List
 from enum import Enum
 
 class GLCode(Enum):
@@ -91,9 +91,13 @@ class Transaction(BaseModel):
     transaction_id: str = Field(..., description="Unique identifier for the transaction")
     transaction_merchant: str = Field(..., description="Name of the merchant for the transaction")
     transaction_notes: Optional[str] = Field(None, description="Additional notes about the transaction")
-    transaction_receipt: Optional[HttpUrl] = Field(None, description="URL to the transaction receipt")
+    transaction_receipt: Optional[str] = Field(None, description="URL to the transaction receipt")
     transaction_category: MercuryCategory = Field(..., description="Category of the expense")
+    alternative_categories: list[MercuryCategory] = Field(..., description='Alternative possible categories')
     transaction_category_confidence: float = Field(..., description="Confidence of the category assignment")
-    gl_code: GLCode = Field(..., description="General Ledger code associated with the transaction")
+    transaction_category_explanation: str = Field(..., description="1 Sentence Rationale for Choosing the category")
+    gl_code: GLCode = Field(..., description="General Ledger codes associated with the transaction")
+    alternative_gl_codes: list[GLCode] = Field(..., description='Alternative General Ledger codes associated with the transaction')
     gl_code_confidence: float = Field(..., description="Confidence level of the general ledger code")
+    gl_code_explanation: str = Field(..., description="1 Sentence Rationale for Choosing the GL code")
     policy_notes: Optional[str] = Field(None, description="Notes related to policy or approval status")
