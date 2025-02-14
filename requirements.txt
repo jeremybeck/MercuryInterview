@@ -3,3 +3,4 @@ openpyxl
 pydantic==2.10.5
 langchain-openai==0.3.0
 openai==1.59.7
+streamlit

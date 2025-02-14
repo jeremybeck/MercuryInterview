@@ -3,88 +3,124 @@ from typing import Optional, List
 from enum import Enum
 
 class GLCode(Enum):
-    PROFESSIONAL_FEES_AND_SERVICES = "Professional Fees and Services"
-    TRAVEL_MEALS = "Travel - Meals"
-    INTERNAL_EVENTS_COMPANY = "Internal Events - Company"
-    PRINTING_AND_SHIPPING = "Printing and Shipping"
-    INTERNAL_GIFTS = "Internal Gifts"
-    CUSTOMER_ACTIVATION_MEALS = "Customer Activation - Meals"
+    # Advertising & Marketing
     ADVERTISING_AWARENESS = "Advertising - Awareness"
-    OFFICE_MEALS = "Office Meals"
-    LODGING = "Lodging"
     ADVERTISING_CONVERSION = "Advertising - Conversion"
-    COMPANY_ERG = "Company ERG"
-    BUSINESS_MEALS = "Business Meals"
-    GROUND_TRANSPORTATION = "Ground Transportation"
+    BRANDING = "Branding"
+    CREATIVE = "Creative"
+    MARKET_RESEARCH = "Market Research"
+
+    # Professional Services & Fees
+    PROFESSIONAL_FEES_AND_SERVICES = "Professional Fees and Services"
+    PROFESSIONAL_DEVELOPMENT = "Professional Development"
     SPONSORSHIPS_CONFERENCES = "Sponsorships & Conferences"
-    OTHER = "Other"
-    TEAM_HAPPY_HOUR = "Team Happy Hour"
-    BUSINESS_GIFTS_EXTERNAL = "Business Gifts - External"
+
+    # Travel & Lodging
+    AIRFARE = "Airfare"
+    GROUND_TRANSPORTATION = "Ground Transportation"
+    LODGING = "Lodging"
+    TRAVEL_MEALS = "Travel - Meals"
     TRAVEL_OTHER_WIFI = "Travel - Other/Wifi"
-    CUSTOMER_FACING_MERCURY_EVENTS = "Customer-facing Mercury Events"
-    REPAIRS_MAINTENANCE = "Repairs & Maintenance"
+
+    # Meals & Entertainment
+    BUSINESS_MEALS = "Business Meals"
+    CUSTOMER_ACTIVATION_MEALS = "Customer Activation - Meals"
+    OFFICE_MEALS = "Office Meals"
+    TEAM_HAPPY_HOUR = "Team Happy Hour"
+    INTERNAL_EVENTS_COMPANY = "Internal Events - Company"
+    INTERNAL_EVENTS_TEAM = "Internal Events - Team"
+    ENTERTAINMENT = "Entertainment"
+
+    # Gifts & Merch
+    INTERNAL_GIFTS = "Internal Gifts"
+    BUSINESS_GIFTS_EXTERNAL = "Business Gifts - External"
+    MERCH_EXTERNAL = "Merch - External"
+    MERCH_INTERNAL = "Merch - Internal"
+
+    # Office & Utilities
+    OFFICE_EXPENSES = "Office Expenses"
+    OFFICE_SNACKS_COFFEE_RUNS = "Office Snacks/Coffee Runs"
     COMPUTER_SUPPLIES = "Computer Supplies"
     SOFTWARE = "Software"
-    VC_SPEEDY_EVENTS = "VC Speedy Events"
-    AIRFARE = "Airfare"
-    ENTERTAINMENT = "Entertainment"
-    DUES_SUBSCRIPTIONS = "Dues & Subscriptions"
-    LUNCH_PERKS = "Lunch Perks"
-    OFFICE_SNACKS_COFFEE_RUNS = "Office Snacks/Coffee Runs"
-    MERCH_EXTERNAL = "Merch - External"
-    OFFICE_EXPENSES = "Office Expenses"
-    DISPUTED_CHARGE = "Disputed Charge"
-    BANK_FEES = "Bank Fees"
-    ACCIDENTAL_PERSONAL_CHARGE = "Accidental Personal Charge"
+    PRINTING_AND_SHIPPING = "Printing and Shipping"
     UTILITIES = "Utilities"
-    MARKET_RESEARCH = "Market Research"
-    MERCH_INTERNAL = "Merch - Internal"
-    PROFESSIONAL_DEVELOPMENT = "Professional Development"
-    CREATIVE = "Creative"
     BUILDING_UTILITIES_FEES = "Building & Utilities Fees"
-    INTERNAL_EVENTS_TEAM = "Internal Events - Team"
-    BRANDING = "Branding"
+
+    # Events & ERG
+    CUSTOMER_FACING_MERCURY_EVENTS = "Customer-facing Mercury Events"
+    VC_SPEEDY_EVENTS = "VC Speedy Events"
+    COMPANY_ERG = "Company ERG"
+
+    # Financial & Fees
+    BANK_FEES = "Bank Fees"
+    DISPUTED_CHARGE = "Disputed Charge"
+    ACCIDENTAL_PERSONAL_CHARGE = "Accidental Personal Charge"
+
+    # Miscellaneous & Perks
+    LUNCH_PERKS = "Lunch Perks"
+    REPAIRS_MAINTENANCE = "Repairs & Maintenance"
+    DUES_SUBSCRIPTIONS = "Dues & Subscriptions"
+    OTHER = "Other"
+
 
 class MercuryCategory(Enum):
+    # Advertising & Marketing
     ADVERTISING = "Advertising"
+    ENTERTAINMENT = "Entertainment"
+    GAMBLING = "Gambling"
+
+    # Travel & Transportation
     AIRLINES = "Airlines"
-    ALCOHOL_AND_BARS = "AlcoholAndBars"
-    BOOKS_AND_NEWSPAPER = "BooksAndNewspaper"
     CAR_RENTAL = "CarRental"
-    CHARITY = "Charity"
-    CLOTHING = "Clothing"
+    GROUND_TRANSPORTATION = "GroundTransportation"
+    RIDESHARE_AND_TAXIS = "RideshareAndTaxis"
+    PARKING = "Parking"
+    LODGING = "Lodging"
+    OTHER_TRAVEL = "OtherTravel"
+    VEHICLE_EXPENSES = "VehicleExpenses"
+
+    # Food & Dining
+    ALCOHOL_AND_BARS = "AlcoholAndBars"
+    FOOD_DELIVERY = "FoodDelivery"
+    GROCERY = "Grocery"
+    RESTAURANTS = "Restaurants"
+
+    # Professional & Education
     CONFERENCES = "Conferences"
     EDUCATION = "Education"
-    ELECTRONICS = "Electronics"
-    ENTERTAINMENT = "Entertainment"
-    FACILITIES_EXPENSES = "FacilitiesExpenses"
-    FEES = "Fees"
-    FOOD_DELIVERY = "FoodDelivery"
-    FUEL_AND_GAS = "FuelAndGas"
-    GAMBLING = "Gambling"
-    GOVERNMENT_SERVICES = "GovernmentServices"
-    GROCERY = "Grocery"
-    GROUND_TRANSPORTATION = "GroundTransportation"
-    INSURANCE = "Insurance"
-    INTERNET_AND_TELEPHONE = "InternetAndTelephone"
     LEGAL = "Legal"
-    LODGING = "Lodging"
-    MEDICAL = "Medical"
-    MEMBERSHIPS = "Memberships"
-    OFFICE_SUPPLIES = "OfficeSupplies"
-    OTHER = "Other"
-    OTHER_TRAVEL = "OtherTravel"
-    PARKING = "Parking"
-    POLITICAL = "Political"
     PROFESSIONAL_SERVICES = "ProfessionalServices"
-    RESTAURANTS = "Restaurants"
-    RETAIL = "Retail"
-    RIDESHARE_AND_TAXIS = "RideshareAndTaxis"
+
+    # Office & Supplies
+    OFFICE_SUPPLIES = "OfficeSupplies"
     SHIPPING = "Shipping"
     SOFTWARE = "Software"
-    TAXES = "Taxes"
+    INTERNET_AND_TELEPHONE = "InternetAndTelephone"
+    FACILITIES_EXPENSES = "FacilitiesExpenses"
     UTILITIES = "Utilities"
-    VEHICLE_EXPENSES = "VehicleExpenses"
+
+    # Health & Insurance
+    MEDICAL = "Medical"
+    INSURANCE = "Insurance"
+
+    # Memberships & Fees
+    MEMBERSHIPS = "Memberships"
+    FEES = "Fees"
+    TAXES = "Taxes"
+
+    # Retail & Shopping
+    BOOKS_AND_NEWSPAPER = "BooksAndNewspaper"
+    CLOTHING = "Clothing"
+    ELECTRONICS = "Electronics"
+    RETAIL = "Retail"
+
+    # Charity & Political
+    CHARITY = "Charity"
+    POLITICAL = "Political"
+
+    # Miscellaneous
+    FUEL_AND_GAS = "FuelAndGas"
+    OTHER = "Other"
 
 
 class Transaction(BaseModel):
@@ -93,11 +129,11 @@ class Transaction(BaseModel):
     transaction_notes: Optional[str] = Field(None, description="Additional notes about the transaction")
     transaction_receipt: Optional[str] = Field(None, description="URL to the transaction receipt")
     transaction_category: MercuryCategory = Field(..., description="Category of the expense")
-    alternative_categories: list[MercuryCategory] = Field(..., description='Alternative possible categories')
+    alternative_categories: list[MercuryCategory] = Field(..., description='Top 5 alternative categories for transaction_category')
     transaction_category_confidence: float = Field(..., description="Confidence of the category assignment")
     transaction_category_explanation: str = Field(..., description="1 Sentence Rationale for Choosing the category")
     gl_code: GLCode = Field(..., description="General Ledger codes associated with the transaction")
-    alternative_gl_codes: list[GLCode] = Field(..., description='Alternative General Ledger codes associated with the transaction')
+    alternative_gl_codes: list[GLCode] = Field(..., description='5 alternative likely General Ledger codes associated with the transaction')
     gl_code_confidence: float = Field(..., description="Confidence level of the general ledger code")
     gl_code_explanation: str = Field(..., description="1 Sentence Rationale for Choosing the GL code")
     policy_notes: Optional[str] = Field(None, description="Notes related to policy or approval status")
