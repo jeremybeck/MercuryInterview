@@ -44,6 +44,6 @@ if __name__=="__main__":
     default_policy = extract_pdf_structure("../data/Mercury_Expense_General_Policy.pdf")
     default_policy_chunks = text_splitter.create_documents([default_policy])
 
-    faiss_index = FAISS.from_documents(default_policy_chunks, embeddings)
+    faiss_index = FAISS.from_documents(onsite_policy_chunks, embeddings)
 
     faiss_index.save_local('../vector_db/policy_info.faiss')
