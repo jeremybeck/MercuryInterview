@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, HttpUrl
-from typing import Optional, List
+from typing import Optional, List, Literal
 from enum import Enum
 
 class GLCode(Enum):
@@ -137,3 +137,10 @@ class Transaction(BaseModel):
     gl_code_confidence: float = Field(..., description="Confidence level of the general ledger code")
     gl_code_explanation: str = Field(..., description="1 Sentence Rationale for Choosing the GL code")
     policy_notes: Optional[str] = Field(None, description="Notes related to policy or approval status")
+
+
+class ApprovalResponse(BaseModel):
+    policy_flag: Literal['Allowed', 'Disallowed', 'More Information Required'] = Field(..., description="Indicates the policy status of the transaction.")
+    policy_explanation: str = Field(..., description="Relevant information from the policy documents justifying the policy_flag value.")
+    polcy_sources: list[str] = Field(...,description="Sources related to the policy documents")
+    recommendation: str = Field(..., description="Recommendation containing next steps for additional information, or updating categories/GL codes for the transaction.")

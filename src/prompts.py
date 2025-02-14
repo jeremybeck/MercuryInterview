@@ -133,3 +133,4 @@ parsing_prompt = PromptTemplate(
 transaction_llm = base_llm.with_structured_output(Transaction)
 
 transaction_chain = parsing_prompt | transaction_llm
+
