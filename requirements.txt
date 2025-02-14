@@ -4,3 +4,9 @@ pydantic==2.10.5
 langchain-openai==0.3.0
 openai==1.59.7
 streamlit
+pymupdf==1.25.3
+langchain==0.3.18
+sentence-transformers
+faiss-cpu
+langchain-community
+numpy<2
