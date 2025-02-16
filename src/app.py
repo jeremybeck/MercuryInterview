@@ -131,5 +131,5 @@ with tab2:
     with st.expander(f'Review Non-Compliant Transactions: {disallowed.shape[0]}'):
         st.dataframe(disallowed.style.applymap(lambda x: 'background-color: rgba(214, 39, 40, 0.3);'))
 
-    with st.expander(f'Comparison of Model vs Manual Tags: 100%'):
-        st.dataframe(pd.crosstab(df['MERCURY_CATEGORY'], df['TRANSACTION_CATEGORY']))
+    with st.expander(f'Comparison of Model vs Manual Tags:'):
+        st.dataframe(pd.crosstab(df['MERCURY_CATEGORY'], df['transaction_category']))
