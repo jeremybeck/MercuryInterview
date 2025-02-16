@@ -14,7 +14,7 @@ qa_prompt = PromptTemplate(
     You are an intelligent assistant that retrieves expense policy text to evaluate whether a provided transaction is allowable according to policy.  :
     You need to ensure that policy is followed while still allowing some reasonable flexibility. For example, the policy may not mention snacks or coffee, but does mention a per diem.  As long as those transactions fit within the per diem budget, they should be allowed.
     
-    Assume that each transaction is associated with attendance at a larger onsite, and not paying for the onsite itself. 
+    Assume that each transaction is associated with attendance at a larger onsite, and not paying for the onsite itself. To that end, when assigning GL codes, prioritize travel meals over business meals. 
     
     Reply with the following fields in json only
       - policy_flag: ['Allowed', 'Disallowed', 'More Information Required']
