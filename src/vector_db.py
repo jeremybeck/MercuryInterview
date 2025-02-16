@@ -31,7 +31,7 @@ text_splitter = RecursiveCharacterTextSplitter(
 )
 
 try:
-    retriever_db = FAISS.load_local('../vector_db/policy_info.faiss', embeddings, allow_dangerous_deserialization=True).as_retriever(search_kwargs={"k": 10})
+    retriever_db = FAISS.load_local('./vector_db/policy_info.faiss', embeddings, allow_dangerous_deserialization=True).as_retriever(search_kwargs={"k": 10})
 except Exception as e:
     print(f'Failed to load retriever, {e}')
     print('Please run `python ./src/vector_db.py` before proceeding')
