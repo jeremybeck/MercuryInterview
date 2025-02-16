@@ -10,3 +10,4 @@ sentence-transformers
 faiss-cpu
 langchain-community
 numpy<2
+plotly
