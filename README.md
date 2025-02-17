@@ -31,18 +31,23 @@ This project aims to enhance the expense reporting and approval process by imple
     ```bash
     pip install -r requirements.txt
     ```
-3. Run the application:  
+3. Create the Vector DB:
     ```bash
-    python app.py
+    python src/vector_db.py
+    ```
+
+4. Run the streamlit application:  
+    ```bash
+    streamlit run src/app.py
     ```
 
 ---
 
 ### **Usage**  
 This application is designed to:  
-- **Automate expense submission:** Real-time receipt ingestion and expense categorization.  
+- **Automate expense submission:** Real-time processing of transactions with expense categorization.  
 - **Streamline approval workflow:** Intelligent policy adherence checks and next best actions for managers.  
-- **Ensure accounting compliance:** GL code alignment and batch processing for accurate financial reporting.  
+- **Ensure accounting compliance:** GL code alignment and policy checks for accurate financial reporting.  
 
 ---
 
