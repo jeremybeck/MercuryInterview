@@ -127,6 +127,7 @@ class Transaction(BaseModel):
     transaction_id: str = Field(..., description="Unique identifier for the transaction")
     transaction_merchant: str = Field(..., description="Name of the merchant for the transaction")
     transaction_notes: Optional[str] = Field(None, description="Additional notes about the transaction")
+    transaction_amount: float = Field(..., description="The amount of the transaction")
     transaction_receipt: Optional[str] = Field(None, description="URL to the transaction receipt")
     transaction_category: MercuryCategory = Field(..., description="Category of the expense")
     alternative_categories: list[MercuryCategory] = Field(..., description='Top 5 alternative categories for transaction_category')

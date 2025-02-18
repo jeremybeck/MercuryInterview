@@ -15,7 +15,7 @@ qa_prompt = PromptTemplate(
     You need to ensure that policy is followed while still allowing some reasonable flexibility.  Ignore the GL code in the transaction details, and determine the right GL code based on policy.  
     If the input and output GL codes wouldn't match, make a recommendation to switch the GL code. 
     
-    Be mindful of lunch perks - a lot of employees charge food over lunchtime on a regular basis.  These transactions should take place around lunch time. 
+    Be mindful of lunch perks - a lot of employees charge food over lunchtime on a regular basis.  These transactions should take place around lunch time.  Ensure that transaction amounts are not over the allowed limit according to policy. 
     
     
     Reply with the following fields in json only
