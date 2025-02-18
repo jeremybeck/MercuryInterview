@@ -22,13 +22,63 @@ with tab1:
         answer = transaction_chain.invoke({'transaction': transaction_details})
         return answer
 
-    def invoke_policy_chain(_result):
-        approval_response = policy_chain(_result.json())
+    def invoke_policy_chain(_result_to_pass):
+        approval_response = policy_chain(_result_to_pass.json())
         return approval_response
 
+    @st.cache_resource()
+    def update_categories(_result):
+        st.subheader("Categorization Result")
+        # Recommended Category Dropdown
+        # Store selections in session state
+        if 'selected_category' not in st.session_state:
+            st.session_state.selected_category = _result.transaction_category.value
+        if 'selected_gl_code' not in st.session_state:
+            st.session_state.selected_gl_code = _result.gl_code.value
 
+
+
+    # Store the transaction details, result, and approval response in session state
+    if 'transaction_details' not in st.session_state:
+        st.session_state.transaction_details = None
+    if 'result' not in st.session_state:
+        st.session_state.result = None
+    if 'selected_category' not in st.session_state:
+        st.session_state.selected_category = None
+    if 'selected_gl_code' not in st.session_state:
+        st.session_state.selected_gl_code = None
+
+    # Function to trigger policy review
+    def trigger_policy_review():
+
+        print(f"Running Policy Review with {st.session_state.selected_category}, {st.session_state.selected_gl_code}")
+        result_to_pass = st.session_state.result
+
+        #del st.session_state.approval_response
+        result_to_pass.transaction_category = MercuryCategory(st.session_state.selected_category)
+        result_to_pass.transaction_category_explanation = 'Manually Reassigned'
+        result_to_pass.gl_code = GLCode(st.session_state.selected_gl_code)
+        result_to_pass.gl_code_explanation = 'Manually Reassigned'
+
+        print(result_to_pass.model_dump_json())
+        approval_response = invoke_policy_chain(result_to_pass)
+        print(approval_response)
+        if approval_response.policy_flag == 'Allowed':
+            st.info(
+                f"**Policy Review**: {approval_response.policy_flag}\n\n**Explanation**: {approval_response.policy_explanation}\n\n**Recommendation**: {approval_response.recommendation}"
+            )
+        elif approval_response.policy_flag == 'Disallowed':
+            st.error(
+                f"**Policy Review**: {approval_response.policy_flag}\n\n**Explanation**: {approval_response.policy_explanation}\n\n**Recommendation**: {approval_response.recommendation}"
+            )
+        else:
+            st.warning(
+                f"**Policy Review**: {approval_response.policy_flag}\n\n**Explanation**: {approval_response.policy_explanation}\n\n**Recommendation**: {approval_response.recommendation}"
+            )
+
+
+    # Review Button Logic
     if st.button("Review"):
-        # Here is where you'd integrate the OpenAI call
         transaction_details = {
             'expense_date': expense_date,
             'expense_time': expense_time,
@@ -37,41 +87,63 @@ with tab1:
             'transaction_notes': notes,
             'transaction_receipt': receipt
         }
-        # Mocking OpenAI response
+
+        st.session_state.transaction_details = transaction_details
         result = invoke_transaction_chain(transaction_details)
+        st.session_state.result = result
+        # Trigger initial policy review after "Review" is clicked
 
-        st.subheader("Categorization Result")
-        # Recommended Category Dropdown
-        category_options = [result.transaction_category.value] + \
-                           [cat.value for cat in result.alternative_categories]
-        selected_category = st.selectbox("Recommended Category", options=category_options)
-        st.info(f"Explanation: {result.transaction_category_explanation} \n Confidence: {result.transaction_category_confidence}")
+# Display Results if Available
+if st.session_state.result:
+    st.subheader("Categorization Result")
 
-        st.markdown("### Accounting Use")
-        gl_code_options = [result.gl_code.value] + \
-                          [gl.value for gl in result.alternative_gl_codes]
-        selected_gl_code = st.selectbox("GL Code", options=gl_code_options)
-        st.info(f"Explanation: {result.gl_code_explanation} \nConfidence:, {result.gl_code_confidence}")
+    # Recommended Category Dropdown with on_change callback to trigger policy review
+    category_options = [st.session_state.result.transaction_category.value] + \
+                       [cat.value for cat in st.session_state.result.alternative_categories]
+    st.session_state.selected_category = st.selectbox(
+        "Recommended Category",
+        options=category_options,
+        index=0,
+        key='category_select',
+    )
+    st.info(f"Explanation: {st.session_state.result.transaction_category_explanation} \nConfidence: {st.session_state.result.transaction_category_confidence}")
 
-        result.transaction_category = selected_category
-        result.gl_code = selected_gl_code
+    # GL Code Dropdown with on_change callback to trigger policy review
+    gl_code_options = [st.session_state.result.gl_code.value] + \
+                      [gl.value for gl in st.session_state.result.alternative_gl_codes]
+    st.session_state.selected_gl_code = st.selectbox(
+        "GL Code",
+        options=gl_code_options,
+        index=0,
+        key='gl_code_select',
+    )
+    st.info(f"Explanation: {st.session_state.result.gl_code_explanation} \nConfidence: {st.session_state.result.gl_code_confidence}")
 
-        # Policy Review
-        approval_response = invoke_policy_chain(result)
+    #trigger_policy_review()
+    print(f"Running Policy Review with {st.session_state.selected_category}, {st.session_state.selected_gl_code}")
+    result_to_pass = st.session_state.result
 
-        # Create the ApprovalResponse object
+    #del st.session_state.approval_response
+    result_to_pass.transaction_category = MercuryCategory(st.session_state.selected_category)
+    result_to_pass.transaction_category_explanation = 'Manually Reassigned'
+    result_to_pass.gl_code = GLCode(st.session_state.selected_gl_code)
+    result_to_pass.gl_code_explanation = 'Manually Reassigned'
 
-        # Display the response
-        if approval_response.policy_flag == 'Allowed':
-            st.info(
-                f"**Policy Review**: {approval_response.policy_flag}\n\n**Explanation**: {approval_response.policy_explanation}\n\n**Recommendation**: {approval_response.recommendation}")
-        elif approval_response.policy_flag == 'Disallowed':
-            st.error(
-                f"**Policy Review**: {approval_response.policy_flag}\n\n**Explanation**: {approval_response.policy_explanation}\n\n**Recommendation**: {approval_response.recommendation}")
-        else:
-            st.warning(
-                f"**Policy Review**: {approval_response.policy_flag}\n\n**Explanation**: {approval_response.policy_explanation}\n\n**Recommendation**: {approval_response.recommendation}")
-
+    print(result_to_pass.model_dump_json())
+    approval_response = invoke_policy_chain(result_to_pass)
+    print(approval_response)
+    if approval_response.policy_flag == 'Allowed':
+        st.info(
+            f"**Policy Review**: {approval_response.policy_flag}\n\n**Explanation**: {approval_response.policy_explanation}\n\n**Recommendation**: {approval_response.recommendation}"
+        )
+    elif approval_response.policy_flag == 'Disallowed':
+        st.error(
+            f"**Policy Review**: {approval_response.policy_flag}\n\n**Explanation**: {approval_response.policy_explanation}\n\n**Recommendation**: {approval_response.recommendation}"
+        )
+    else:
+        st.warning(
+            f"**Policy Review**: {approval_response.policy_flag}\n\n**Explanation**: {approval_response.policy_explanation}\n\n**Recommendation**: {approval_response.recommendation}"
+        )
 
 with tab2:
     # Sample DataFrame for demonstration purposes
