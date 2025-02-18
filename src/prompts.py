@@ -6,7 +6,7 @@ from language_models import *
 parsing_template = '''
 You are provided with a transaction in a business spend management product. Use the following chain of thought below:
 
-Step 1: Analyze all information provided with the transaction to summarize what you know about it. 
+Step 1: Analyze all information provided with the transaction to summarize what you know about it. Be especially mindful of lunch perks, a benefit where employees can expense lunch. 
 Step 2: Pick the 5 most likely transaction categories for the transaction
 Step 3: Revisit the information you know about the Transaction to pick the top transaction category
 Step 4: Using all information about the transaction you know so far, pick the 5 most likely GL codes.

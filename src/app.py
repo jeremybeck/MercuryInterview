@@ -22,8 +22,7 @@ with tab1:
         answer = transaction_chain.invoke({'transaction': transaction_details})
         return answer
 
-    @st.cache_resource()
-    def invoke_policy_chain(_result, selected_category, selected_gl_code):
+    def invoke_policy_chain(_result):
         approval_response = policy_chain(_result.json())
         return approval_response
 
@@ -58,7 +57,7 @@ with tab1:
         result.gl_code = selected_gl_code
 
         # Policy Review
-        approval_response = invoke_policy_chain(result, selected_category, selected_gl_code)
+        approval_response = invoke_policy_chain(result)
 
         # Create the ApprovalResponse object
 
