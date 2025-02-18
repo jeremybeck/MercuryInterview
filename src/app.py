@@ -3,19 +3,19 @@ from prompts import *
 from policy_qa import *
 import plotly.express as px
 
-tab1, tab2 = st.tabs(['Submit Expenses', 'Expense Report'])
+tab1, tab2, tab3 = st.tabs(['Submit Expenses', 'Expense Report', 'How It Works'])
 
 with tab1:
     # Streamlit UI
     st.title("Submit Expense")
-    expense_type = st.radio("", ["Expense", "Mileage"], horizontal=True)
+    expense_type = st.radio("", ["Expense", "Mileage (Deactivated)"], horizontal=True)
 
     expense_date = st.date_input("Expense Date")
     expense_time = st.time_input("Expense Time")
     merchant = st.text_input("Merchant")
     amount = st.text_input("Amount", value="$ 0.00")
     notes = st.text_area("Notes", placeholder="What was this expense for?")
-    receipt = st.file_uploader("Receipt", type=["png", "jpg", "pdf"], help="We can pull your transaction details automatically.")
+    receipt = st.file_uploader("Receipt", type=["png", "jpg", "pdf"], help="Upload a Receipt")
 
     @st.cache_resource()
     def invoke_transaction_chain(transaction_details):
@@ -132,3 +132,39 @@ with tab2:
 
     with st.expander(f'Comparison of Model vs Manual Tags:'):
         st.dataframe(pd.crosstab(df['MERCURY_CATEGORY'], df['transaction_category']))
+
+
+with tab3:
+
+    next_up_str = '''
+## Expense Categorization  
+The current implementation leverages transaction details and a zero-shot prompt.  Specific Transaction details like those listed below can be modified to change tagging decisions. 
+- Merchant Name
+- Notes
+- Time and Date of Transaction
+- Receipt
+
+For each transaction the system provides:
+  1. A recommended tag/GL code
+  2. An explanation for the tag/GL Code
+  3. A confidence in the output (needs calibration in future versions)
+  4. Alternative tags that may relate to the transaction.  
+
+### Categorization Next Steps:  
+- Incorporate **few-shot learning** using historical transactions to improve categorization accuracy.  
+- Implement **representation learning** for embeddings using **Shared Encoder Networks** to fine-tune embeddings for classification and retrieval tasks.  
+
+---
+
+## Policy Assessments  
+Policy assessments are conducted using **Retrieval Augmented Generation (RAG)** with a vector database that embeds and stores policy documents. 
+The policy documents are processed, chunked according to document structure, and embedded. Metadata can be leveraged to filter to specific policies depending on whether the expense is related to general policy, travel, etc. Transaction details from above are then used to retrieve relevant policy chunks, and evaluate whether the transaction is allowed.  A next best action recommendation is also made to rectify any issues, or approve.  
+
+### Next Steps:  
+- Enhance RAG functionality by incorporating a more **agentic system** that can iterate through questions, and ask related followup questions to assess ambiguous policies.  
+- Integrate historical transactions for users to enable accurate policy assessments, particularly for policies based on aggregated transactions (e.g., $100/week for lunch perks).  
+'''
+
+    st.markdown('    # Spend Management System Overview  ')
+    st.info('Please note this is an early prototype app intended to demonstrate functionality and collect user feedback to assess value and priorities. There are many opportunities to improve functionality, and to that end a description of how the app currently works and intended next steps are included below')
+    st.markdown(next_up_str)

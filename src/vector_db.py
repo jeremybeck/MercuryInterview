@@ -39,7 +39,7 @@ except Exception as e:
 if __name__=="__main__":
 
     onsite_policy = extract_pdf_structure("../data/Mercury Onsite Policy.pdf")
-    onsite_policy_chunks = text_splitter.create_documents([onsite_policy])u[pd]
+    onsite_policy_chunks = text_splitter.create_documents([onsite_policy])
 
     default_policy = extract_pdf_structure("../data/Mercury_Expense_General_Policy.pdf")
     default_policy_chunks = text_splitter.create_documents([default_policy])
